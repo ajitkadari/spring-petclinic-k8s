@@ -29,7 +29,7 @@ Pre-built container images are available, so that you can start deploying this a
 Many buildpack implementations are available: for best results, use [Paketo buildpacks](https://paketo.io):
 
 ```bash
-$ pack set-default-builder gcr.io/paketo-buildpacks/builder:base
+$ pack config default-builder gcr.io/paketo-buildpacks/builder:base
 ```
 
 You're ready to build container images with no Dockerfile!
