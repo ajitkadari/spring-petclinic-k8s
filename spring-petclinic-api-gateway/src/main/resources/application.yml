@@ -6,9 +6,9 @@ app:
   visits:
     uri: http://localhost:8084
 
-wavefront:
+spring:
   application:
-    name: petclinic
+    name: api-gateway
 
 spring:
   cloud:
@@ -43,7 +43,7 @@ spring:
           filters:
             - StripPrefix=2
   zipkin:
-    enabled: false
+    enabled: true
 
 management:
   health:
@@ -53,7 +53,13 @@ management:
     web:
       exposure:
         include: health, info, prometheus
-  metrics:
-    export:
-      wavefront:
-        enabled: false
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+  tracing:
+    sampling:
+      probability: 1.0
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

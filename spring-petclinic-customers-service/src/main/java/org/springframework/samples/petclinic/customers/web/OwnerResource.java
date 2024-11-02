@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.customers.web;
 
 import io.micrometer.core.annotation.Timed;
+import io.micrometer.tracing.annotation.NewSpan;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,7 @@ class OwnerResource {
     /**
      * Create Owner
      */
+    @NewSpan(value = "owners-service-postOwner-span")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Owner createOwner(@Valid @RequestBody Owner owner) {
@@ -55,6 +57,7 @@ class OwnerResource {
     /**
      * Read single Owner
      */
+    @NewSpan(value = "owners-service-getOwnerById-span")
     @GetMapping(value = "/{ownerId}")
     public Optional<Owner> findOwner(@PathVariable("ownerId") int ownerId) {
         return ownerRepository.findById(ownerId);
@@ -63,6 +66,7 @@ class OwnerResource {
     /**
      * Read List of Owners
      */
+    @NewSpan(value = "owners-service-getAllOwners-span")
     @GetMapping
     public List<Owner> findAll() {
         return ownerRepository.findAll();
@@ -71,6 +75,7 @@ class OwnerResource {
     /**
      * Update Owner
      */
+    @NewSpan(value = "owners-service-updateOwnerById-span")
     @PutMapping(value = "/{ownerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateOwner(@PathVariable("ownerId") int ownerId, @Valid @RequestBody Owner ownerRequest) {

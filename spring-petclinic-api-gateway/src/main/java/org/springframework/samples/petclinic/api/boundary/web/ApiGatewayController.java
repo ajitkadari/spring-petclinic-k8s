@@ -16,6 +16,8 @@
 package org.springframework.samples.petclinic.api.boundary.web;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import io.micrometer.tracing.annotation.NewSpan;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
 import org.springframework.samples.petclinic.api.application.CustomersServiceClient;
@@ -35,8 +37,9 @@ import java.util.stream.Collectors;
  * @author Maciej Szarlinski
  */
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/gateway")
+@RequiredArgsConstructor
+@Slf4j
 public class ApiGatewayController {
 
     private final CustomersServiceClient customersServiceClient;
@@ -45,6 +48,7 @@ public class ApiGatewayController {
 
     private final ReactiveCircuitBreakerFactory cbFactory;
 
+    @NewSpan(value = "api-gateway-getPetByPetId-span")
     @GetMapping(value = "owners/{ownerId}")
     public Mono<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
         return customersServiceClient.getOwner(ownerId)

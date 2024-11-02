@@ -19,6 +19,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import io.micrometer.core.annotation.Timed;
+import io.micrometer.tracing.annotation.NewSpan;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,7 @@ class VisitResource {
 
     private final VisitRepository visitRepository;
 
+    @NewSpan(value = "visits-service-postVisitByPetId-span")
     @PostMapping("owners/*/pets/{petId}/visits")
     @ResponseStatus(HttpStatus.CREATED)
     Visit create(
@@ -59,11 +61,13 @@ class VisitResource {
         return visitRepository.save(visit);
     }
 
+    @NewSpan(value = "visits-service-getVisitByPetId-span")
     @GetMapping("owners/*/pets/{petId}/visits")
     List<Visit> visits(@PathVariable("petId") int petId) {
         return visitRepository.findByPetId(petId);
     }
 
+    @NewSpan(value = "visits-service-getVisitByPetIds-span")
     @GetMapping("pets/visits")
     Visits visitsMultiGet(@RequestParam("petId") List<Integer> petIds) {
         final List<Visit> byPetIdIn = visitRepository.findByPetIdIn(petIds);

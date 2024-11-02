@@ -11,11 +11,11 @@
     <parent>
         <groupId>org.springframework.samples</groupId>
         <artifactId>spring-petclinic-k8s</artifactId>
-        <version>2.3.3</version>
+        <version>3.3.5</version>
     </parent>
 
     <properties>
-        <webjars-bootstrap.version>3.3.7-1</webjars-bootstrap.version>
+        <webjars-bootstrap.version>3.4.0</webjars-bootstrap.version>
         <webjars-jquery-ui.version>1.11.4</webjars-jquery-ui.version>
         <webjars-jquery.version>3.1.1-1</webjars-jquery.version>
         <webjars-angular.version>1.6.4</webjars-angular.version>
@@ -37,13 +37,48 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Prerequisite for observability -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- For Observation AOP -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<!-- For Metrics -->
+		<!-- For OTLP -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-otlp</artifactId>
+		</dependency>
+
+		<!-- Brave version -->
+		<!-- For Tracing -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-brave</artifactId>
+		</dependency>
+		<!-- For Latency Visualization -->
+		<dependency>
+			<groupId>io.zipkin.contrib.otel</groupId>
+			<artifactId>encoder-brave</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+
+		<!-- For pushing logs out -->
+		<dependency>
+			<groupId>com.github.loki4j</groupId>
+			<artifactId>loki-logback-appender</artifactId>
+			<version>1.5.2</version>
+			<scope>runtime</scope>
+		</dependency>
 
         <!-- Spring Cloud -->
         <dependency>
@@ -54,31 +89,18 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zipkin</artifactId>
-        </dependency>
 
         <!-- Third parties -->
-        <dependency>
-            <groupId>com.wavefront</groupId>
-            <artifactId>wavefront-spring-boot-starter</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.jolokia</groupId>
             <artifactId>jolokia-core</artifactId>
+            <version>1.7.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.github.resilience4j</groupId>
-            <artifactId>resilience4j-micrometer</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <!-- Webjars -->
