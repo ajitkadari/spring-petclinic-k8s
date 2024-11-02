@@ -16,7 +16,7 @@ optimized container images for you.
 
 ## Building this application
 
-You need a JDK 8+ to build this application:
+You need a JDK 17+ to build this application:
 
 ```bash
 $ ./mvnw clean package
@@ -104,7 +104,7 @@ Run these commands to create a MySQL database:
 
 ```bash
 $ kubectl create ns spring-petclinic
-$ helm upgrade pdb bitnami/mysql -n spring-petclinic -f k8s/services/mysql/values.yml --version 6.14.4 --install
+$ helm upgrade pdb bitnami/mysql -n spring-petclinic -f k8s/services/mysql/values.yml --version 11.1.19 --install
 ```
 
 If you want to enable Wavefront integration, you need to deploy a proxy first. [Follow this guide](https://docs.wavefront.com/kubernetes.html)
