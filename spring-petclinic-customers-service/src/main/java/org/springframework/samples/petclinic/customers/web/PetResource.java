@@ -19,6 +19,8 @@ import io.micrometer.core.annotation.Timed;
 import io.micrometer.tracing.annotation.NewSpan;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.customers.model.*;
 import org.springframework.web.bind.annotation.*;
@@ -38,12 +40,14 @@ import java.util.Optional;
 @Slf4j
 class PetResource {
 
+    private static final Logger log = LoggerFactory.getLogger(PetResource.class);
     private final PetRepository petRepository;
     private final OwnerRepository ownerRepository;
 
     @NewSpan(value = "customers-service-getPetTypes-span")
     @GetMapping("/petTypes")
     public List<PetType> getPetTypes() {
+        log.info("Getting all petTypes");
         return petRepository.findPetTypes();
     }
 
@@ -58,7 +62,7 @@ class PetResource {
         final Optional<Owner> optionalOwner = ownerRepository.findById(ownerId);
         Owner owner = optionalOwner.orElseThrow(() -> new ResourceNotFoundException("Owner "+ownerId+" not found"));
         owner.addPet(pet);
-
+        log.info("Saving pet to ownerId: {}", ownerId);
         return save(pet, petRequest);
     }
 
@@ -68,6 +72,7 @@ class PetResource {
     public void processUpdateForm(@RequestBody PetRequest petRequest) {
         int petId = petRequest.getId();
         Pet pet = findPetById(petId);
+        log.info("Saving petRequest: {}", petRequest);
         save(pet, petRequest);
     }
 
@@ -86,6 +91,7 @@ class PetResource {
     @NewSpan(value = "customers-service-getPetByPetId-span")
     @GetMapping("owners/*/pets/{petId}")
     public PetDetails findPet(@PathVariable("petId") int petId) {
+        log.info("Getting pet by petId: {}", petId);
         return new PetDetails(findPetById(petId));
     }
 

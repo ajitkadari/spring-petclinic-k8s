@@ -23,6 +23,8 @@ import io.micrometer.tracing.annotation.NewSpan;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.visits.model.Visit;
 import org.springframework.samples.petclinic.visits.model.VisitRepository;
@@ -47,6 +49,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Timed("petclinic.visit")
 class VisitResource {
 
+    private static final Logger log = LoggerFactory.getLogger(VisitResource.class);
     private final VisitRepository visitRepository;
 
     @NewSpan(value = "visits-service-postVisitByPetId-span")
@@ -64,6 +67,7 @@ class VisitResource {
     @NewSpan(value = "visits-service-getVisitByPetId-span")
     @GetMapping("owners/*/pets/{petId}/visits")
     List<Visit> visits(@PathVariable("petId") int petId) {
+        log.info("Getting visits by petId {}", String.valueOf(petId));
         return visitRepository.findByPetId(petId);
     }
 
@@ -71,6 +75,7 @@ class VisitResource {
     @GetMapping("pets/visits")
     Visits visitsMultiGet(@RequestParam("petId") List<Integer> petIds) {
         final List<Visit> byPetIdIn = visitRepository.findByPetIdIn(petIds);
+        log.info("Getting visits by petIds");
         return new Visits(byPetIdIn);
     }
 

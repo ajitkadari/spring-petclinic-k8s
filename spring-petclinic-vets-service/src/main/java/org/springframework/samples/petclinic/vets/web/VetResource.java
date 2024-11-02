@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import io.micrometer.tracing.annotation.NewSpan;
 import org.springframework.samples.petclinic.vets.model.Vet;
 import org.springframework.samples.petclinic.vets.model.VetRepository;
@@ -39,11 +41,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 class VetResource {
 
+    private static final Logger log = LoggerFactory.getLogger(VetResource.class);
     private final VetRepository vetRepository;
 
     @NewSpan(value = "vets-service-getAll-span")
     @GetMapping
     public List<Vet> showResourcesVetList() {
+        log.info("Get all Vets");
         return vetRepository.findAll();
     }
 }
