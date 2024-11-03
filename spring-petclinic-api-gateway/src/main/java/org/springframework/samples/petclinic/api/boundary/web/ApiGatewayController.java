@@ -50,7 +50,7 @@ public class ApiGatewayController {
     private final VisitsServiceClient visitsServiceClient;
     private final ReactiveCircuitBreakerFactory cbFactory;
 
-    @Observed(name = "petclinic:getPetByPetId")
+    @Observed(name = "petclinic:getOwnerDetailsById")
     @GetMapping(value = "owners/{ownerId}")
     public Mono<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
         log.info("Getting owner by ownerId: {}", ownerId);

@@ -66,7 +66,7 @@ class PetResource {
         return save(pet, petRequest);
     }
 
-    @Observed(name = "customers-service:updatePetByPetId")
+    @Observed(name = "customers-service:updatePetById")
     @PutMapping("/owners/*/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void processUpdateForm(@RequestBody PetRequest petRequest) {
@@ -88,7 +88,7 @@ class PetResource {
         return petRepository.save(pet);
     }
 
-    @Observed(name = "customers-service:getPetByPetId")
+    @Observed(name = "customers-service:getPetById")
     @GetMapping("owners/*/pets/{petId}")
     public PetDetails findPet(@PathVariable("petId") int petId) {
         log.info("Getting pet by petId: {}", petId);
