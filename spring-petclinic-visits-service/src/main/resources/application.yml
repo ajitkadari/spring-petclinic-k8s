@@ -15,8 +15,10 @@ management:
         include: health, info, prometheus
   otlp:
     tracing:
+      enabled: false
       endpoint: http://localhost:4318/v1/traces
     metrics:
+      enabled: false
       export:
         url: http://localhost:4318/v1/metrics
         step: 5s
@@ -27,7 +29,7 @@ management:
 otel:
   logs:
     exporter:
-      enabled: true
+      enabled: false
       endpoint: http://localhost:3100/loki/api/v1/push
 
 spring:

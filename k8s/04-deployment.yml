@@ -36,12 +36,6 @@ spec:
                 name: app
             - secretRef:
                 name: database
-            - configMapRef:
-                name: app-wavefront
-                optional: true            
-            - secretRef:
-                name: app-wavefront
-                optional: true
           ports:
             - name: http
               containerPort: 8080
@@ -95,12 +89,6 @@ spec:
                 name: app
             - secretRef:
                 name: database
-            - configMapRef:
-                name: app-wavefront
-                optional: true            
-            - secretRef:
-                name: app-wavefront
-                optional: true
           env:
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
@@ -160,12 +148,6 @@ spec:
                 name: app
             - secretRef:
                 name: database
-            - configMapRef:
-                name: app-wavefront
-                optional: true            
-            - secretRef:
-                name: app-wavefront
-                optional: true
           env:
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
@@ -225,12 +207,6 @@ spec:
                 name: app
             - secretRef:
                 name: database
-            - configMapRef:
-                name: app-wavefront
-                optional: true            
-            - secretRef:
-                name: app-wavefront
-                optional: true
           env:
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
