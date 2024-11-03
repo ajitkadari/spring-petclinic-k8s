@@ -66,16 +66,17 @@
             <version>1.7.2</version>
         </dependency>
  
-         <!-- Prerequisite for observability -->
+         <!-- Prerequisite for Observability -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
-		<!-- For Observation AOP -->
+		<!-- For Observation -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-observation</artifactId>
+			<version>1.13.6</version>
 		</dependency>
 		<!-- For Metrics -->
 		<!-- For OTLP -->
@@ -84,26 +85,26 @@
 			<artifactId>micrometer-registry-otlp</artifactId>
 		</dependency>
 
-		<!-- Brave version -->
+		<!-- OTEL version -->
 		<!-- For Tracing -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-tracing-bridge-brave</artifactId>
+			<artifactId>micrometer-tracing-bridge-otel</artifactId>
 		</dependency>
 		<!-- For Latency Visualization -->
 		<dependency>
-			<groupId>io.zipkin.contrib.otel</groupId>
-			<artifactId>encoder-brave</artifactId>
-			<version>0.1.0</version>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-otlp</artifactId>
+			<version>1.43.0</version>
 		</dependency>
 
 		<!-- For pushing logs out -->
-		<dependency>
-			<groupId>com.github.loki4j</groupId>
-			<artifactId>loki-logback-appender</artifactId>
-			<version>1.5.2</version>
-			<scope>runtime</scope>
-		</dependency>
+        <dependency>
+            <groupId>com.github.loki4j</groupId>
+            <artifactId>loki-logback-appender</artifactId>
+            <version>1.5.2</version>
+            <scope>runtime</scope>
+        </dependency>
  
          <dependency>
             <groupId>org.projectlombok</groupId>

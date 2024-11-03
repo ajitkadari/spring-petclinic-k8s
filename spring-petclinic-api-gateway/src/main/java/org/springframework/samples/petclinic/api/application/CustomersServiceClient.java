@@ -30,6 +30,7 @@ import reactor.core.publisher.Mono;
 public class CustomersServiceClient {
 
     private final WebClient.Builder webClientBuilder;
+    
     @Value("${app.customers.uri}")
     private String customersUri;
 

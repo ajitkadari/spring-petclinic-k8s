@@ -19,7 +19,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import io.micrometer.core.annotation.Timed;
-import io.micrometer.tracing.annotation.NewSpan;
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +52,7 @@ class VisitResource {
     private static final Logger log = LoggerFactory.getLogger(VisitResource.class);
     private final VisitRepository visitRepository;
 
-    @NewSpan(value = "visits-service-postVisitByPetId-span")
+    @Observed(name = "visits-service:postVisitByPetId")
     @PostMapping("owners/*/pets/{petId}/visits")
     @ResponseStatus(HttpStatus.CREATED)
     Visit create(
@@ -64,14 +64,14 @@ class VisitResource {
         return visitRepository.save(visit);
     }
 
-    @NewSpan(value = "visits-service-getVisitByPetId-span")
+    @Observed(name = "visits-service:getVisitByPetId")
     @GetMapping("owners/*/pets/{petId}/visits")
     List<Visit> visits(@PathVariable("petId") int petId) {
         log.info("Getting visits by petId {}", String.valueOf(petId));
         return visitRepository.findByPetId(petId);
     }
 
-    @NewSpan(value = "visits-service-getVisitByPetIds-span")
+    @Observed(name = "visits-service:getVisitByPetIds")
     @GetMapping("pets/visits")
     Visits visitsMultiGet(@RequestParam("petId") List<Integer> petIds) {
         final List<Visit> byPetIdIn = visitRepository.findByPetIdIn(petIds);

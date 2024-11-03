@@ -16,7 +16,7 @@
 package org.springframework.samples.petclinic.customers.web;
 
 import io.micrometer.core.annotation.Timed;
-import io.micrometer.tracing.annotation.NewSpan;
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -44,14 +44,14 @@ class PetResource {
     private final PetRepository petRepository;
     private final OwnerRepository ownerRepository;
 
-    @NewSpan(value = "customers-service-getPetTypes-span")
+    @Observed(name = "customers-service:getPetTypes")
     @GetMapping("/petTypes")
     public List<PetType> getPetTypes() {
         log.info("Getting all petTypes");
         return petRepository.findPetTypes();
     }
 
-    @NewSpan(value = "customers-service-postPetByOwnerId-span")
+    @Observed(name = "customers-service:postPetByOwnerId")
     @PostMapping("/owners/{ownerId}/pets")
     @ResponseStatus(HttpStatus.CREATED)
     public Pet processCreationForm(
@@ -66,7 +66,7 @@ class PetResource {
         return save(pet, petRequest);
     }
 
-    @NewSpan(value = "customers-service-updatePetByPetId-span")
+    @Observed(name = "customers-service:updatePetByPetId")
     @PutMapping("/owners/*/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void processUpdateForm(@RequestBody PetRequest petRequest) {
@@ -88,7 +88,7 @@ class PetResource {
         return petRepository.save(pet);
     }
 
-    @NewSpan(value = "customers-service-getPetByPetId-span")
+    @Observed(name = "customers-service:getPetByPetId")
     @GetMapping("owners/*/pets/{petId}")
     public PetDetails findPet(@PathVariable("petId") int petId) {
         log.info("Getting pet by petId: {}", petId);

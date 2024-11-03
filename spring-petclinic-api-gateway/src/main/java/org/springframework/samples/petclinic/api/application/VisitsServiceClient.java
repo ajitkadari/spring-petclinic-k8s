@@ -35,7 +35,7 @@ public class VisitsServiceClient {
 
     // Could be changed for testing purpose
     @Value("${app.visits.uri}")
-    private String hostname = "http://visits-service/";
+    private String hostname;
 
     private final WebClient.Builder webClientBuilder;
 

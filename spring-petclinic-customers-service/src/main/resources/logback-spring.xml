@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProperty name="name" source="spring.application.name" />
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} - %msg%n"
+            </pattern>
+        </encoder>
+    </appender>
+
+   <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <http>
+        <!--
+            <url>http://localhost:3100/loki/api/v1/push</url>
+        -->
+            <url>${logging.otel.endpoint}</url>
+        </http>
+        <format>
+            <label>
+                <pattern>"%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"</pattern>
+                <readMarkers>true</readMarkers>
+            </label>
+            <message>
+                <pattern>
+                    {
+                    "level":"%level",
+                    "class":"%logger{36}",
+                    "thread":"%thread",
+                    "message": "%message",
+                    "requestId": "%X{X-Request-ID}"
+                    }
+                </pattern>
+            </message>
+         </format>
+     </appender>
+     
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="LOKI" />
+    </root>
+
+</configuration>

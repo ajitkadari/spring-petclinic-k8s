@@ -16,7 +16,7 @@
 package org.springframework.samples.petclinic.customers.web;
 
 import io.micrometer.core.annotation.Timed;
-import io.micrometer.tracing.annotation.NewSpan;
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -50,7 +50,7 @@ class OwnerResource {
     /**
      * Create Owner
      */
-    @NewSpan(value = "owners-service-postOwner-span")
+    @Observed(name = "owners-service:postOwner")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Owner createOwner(@Valid @RequestBody Owner owner) {
@@ -61,7 +61,7 @@ class OwnerResource {
     /**
      * Read single Owner
      */
-    @NewSpan(value = "owners-service-getOwnerById-span")
+    @Observed(name = "owners-service:getOwnerById")
     @GetMapping(value = "/{ownerId}")
     public Optional<Owner> findOwner(@PathVariable("ownerId") int ownerId) {
         log.info("Getting owner by ownerId {}", String.valueOf(ownerId));
@@ -71,7 +71,7 @@ class OwnerResource {
     /**
      * Read List of Owners
      */
-    @NewSpan(value = "owners-service-getAllOwners-span")
+    @Observed(name = "owners-service:getAllOwners")
     @GetMapping
     public List<Owner> findAll() {
         log.info("Getting all owners");
@@ -81,7 +81,7 @@ class OwnerResource {
     /**
      * Update Owner
      */
-    @NewSpan(value = "owners-service-updateOwnerById-span")
+    @Observed(name = "owners-service:updateOwnerById")
     @PutMapping(value = "/{ownerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateOwner(@PathVariable("ownerId") int ownerId, @Valid @RequestBody Owner ownerRequest) {
