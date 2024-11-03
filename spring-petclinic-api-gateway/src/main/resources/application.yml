@@ -46,6 +46,8 @@ spring:
     enabled: true
 
 management:
+  server:
+    port: 9101
   health:
     probes:
       enabled: true
@@ -69,3 +71,8 @@ otel:
     exporter:
       enabled: true
       endpoint: http://localhost:3100/loki/api/v1/push
+
+logging.level:
+  org.springframework: DEBUG
+  org.springframework.jdbc.core: TRACE
+  io.micrometer.observation: TRACE

@@ -6,6 +6,8 @@ spring:
     name: visits-service
 
 management:
+  server:
+    port: 9101
   health:
     probes:
       enabled: true
@@ -49,3 +51,8 @@ spring:
   datasource:
     schema: classpath*:db/mysql/schema.sql
     data: classpath*:db/mysql/data.sql
+
+logging.level:
+  org.springframework: DEBUG
+  org.springframework.jdbc.core: TRACE
+  io.micrometer.observation: TRACE

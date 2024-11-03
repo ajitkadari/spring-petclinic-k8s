@@ -1,25 +1,16 @@
-spring:
-  cache:
-    cache-names: vets
-  datasource:
-    initialization-mode: always
-    schema: classpath*:db/hsqldb/schema.sql
-    data: classpath*:db/hsqldb/data.sql
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: none
-  zipkin:
-    enabled: true
+server:
+  port: 8083
+  # graceful shutdown makes sure we have time to finnish any ongoing rest requests before terminating
+  # default value will be 30s before terminating
+  shutdown: graceful
 
 spring:
   application:
     name: vets-service
 
-server:
-  port: 8083
-
 management:
+  server:
+    port: 9101
   health:
     probes:
       enabled: true
@@ -38,6 +29,20 @@ management:
     sampling:
       probability: 1.0
 
+spring:
+  cache:
+    cache-names: vets
+  datasource:
+    initialization-mode: always
+    schema: classpath*:db/hsqldb/schema.sql
+    data: classpath*:db/hsqldb/data.sql
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  zipkin:
+    enabled: true
+
 otel:
   logs:
     exporter:
@@ -49,3 +54,8 @@ spring:
   datasource:
     schema: classpath*:db/mysql/schema.sql
     data: classpath*:db/mysql/data.sql
+
+logging.level:
+  org.springframework: DEBUG
+  org.springframework.jdbc.core: TRACE
+  io.micrometer.observation: TRACE

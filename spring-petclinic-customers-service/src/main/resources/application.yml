@@ -1,11 +1,16 @@
 server:
   port: 8082
+  # graceful shutdown makes sure we have time to finnish any ongoing rest requests before terminating
+  # default value will be 30s before terminating
+  shutdown: graceful
 
 spring:
   application:
     name: customers-service
 
 management:
+  server:
+    port: 9101
   health:
     probes:
       enabled: true
@@ -47,3 +52,8 @@ spring:
   datasource:
     schema: classpath*:db/mysql/schema.sql
     data: classpath*:db/mysql/data.sql
+
+logging.level:
+  org.springframework: DEBUG
+  org.springframework.jdbc.core: TRACE
+  io.micrometer.observation: TRACE

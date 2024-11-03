@@ -41,43 +41,49 @@
             <scope>test</scope>
         </dependency>
 
+
         <!-- Prerequisite for Observability -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-
+        
 		<!-- For Observation -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-observation</artifactId>
-			<version>1.13.6</version>
 		</dependency>
+		
 		<!-- For Metrics -->
 		<!-- For OTLP -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-otlp</artifactId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
-
 		<!-- OTEL version -->
 		<!-- For Tracing -->
+		<!--I'm using micrometer-tracing, by adding a bridge the micrometer-tracing library is added transitively.-->
+		<!--OpenTelemetry Tracer: Bridges the Micrometer Observation API to OpenTelemetry-->
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-tracing-bridge-otel</artifactId>
 		</dependency>
 		<!-- For Latency Visualization -->
+    	<!--Reporter/Zipkin with OpenTelemetry: Reports traces to Zipkin-->
 		<dependency>
 			<groupId>io.opentelemetry</groupId>
-			<artifactId>opentelemetry-exporter-otlp</artifactId>
-			<version>1.43.0</version>
+			<artifactId>opentelemetry-exporter-zipkin</artifactId>
 		</dependency>
 
 		<!-- For pushing logs out -->
         <dependency>
             <groupId>com.github.loki4j</groupId>
             <artifactId>loki-logback-appender</artifactId>
-            <version>1.5.2</version>
+			<version>1.5.2</version>
             <scope>runtime</scope>
         </dependency>
 
