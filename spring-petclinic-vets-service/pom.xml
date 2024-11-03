@@ -121,10 +121,10 @@
 			<artifactId>micrometer-tracing-bridge-otel</artifactId>
 		</dependency>
 		<!-- For Latency Visualization -->
-    	<!--Reporter/Zipkin with OpenTelemetry: Reports traces to Zipkin-->
+    	<!--Reports traces to OTLP collector-->
 		<dependency>
 			<groupId>io.opentelemetry</groupId>
-			<artifactId>opentelemetry-exporter-zipkin</artifactId>
+			<artifactId>opentelemetry-exporter-otlp</artifactId>
 		</dependency>
 
 		<!-- For pushing logs out -->
