@@ -16,7 +16,7 @@
         <!--
             <url>http://localhost:3100/loki/api/v1/push</url>
         -->
-            <url>${logging.otel.endpoint}</url>
+            <url>${.otel.logs.endpoint}</url>
         </http>
         <format>
             <label>

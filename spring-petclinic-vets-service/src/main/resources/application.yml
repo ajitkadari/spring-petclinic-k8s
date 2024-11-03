@@ -47,7 +47,7 @@ otel:
   logs:
     exporter:
       enabled: true
-      endpoint: http://localhost:3100/loki/api/v1/push
+    endpoint: http://localhost:3100/loki/api/v1/push
 ---
 spring:
   profiles: mysql
