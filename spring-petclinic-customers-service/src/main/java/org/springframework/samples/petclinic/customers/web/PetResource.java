@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.customers.model.*;
 import org.springframework.web.bind.annotation.*;
+import io.micrometer.observation.ObservationRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +45,9 @@ class PetResource {
     private static final Logger log = LoggerFactory.getLogger(PetResource.class);
     private final PetRepository petRepository;
     private final OwnerRepository ownerRepository;
+
+    @Autowired
+    private ObservationRegistry observationRegistry;
 
     @Observed(name = "customers-service:getPetTypes")
     @GetMapping("/petTypes")

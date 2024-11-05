@@ -27,6 +27,8 @@ import org.springframework.samples.petclinic.vets.model.VetRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import io.micrometer.observation.ObservationRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Juergen Hoeller
@@ -43,6 +45,9 @@ class VetResource {
 
     private static final Logger log = LoggerFactory.getLogger(VetResource.class);
     private final VetRepository vetRepository;
+
+    @Autowired
+    private ObservationRegistry observationRegistry;
 
     @Observed(name = "vets-service:getAll")
     @GetMapping

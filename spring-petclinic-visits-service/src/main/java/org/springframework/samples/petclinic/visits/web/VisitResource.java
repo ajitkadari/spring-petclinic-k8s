@@ -35,6 +35,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import io.micrometer.observation.ObservationRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Juergen Hoeller
@@ -51,6 +53,9 @@ class VisitResource {
 
     private static final Logger log = LoggerFactory.getLogger(VisitResource.class);
     private final VisitRepository visitRepository;
+
+    @Autowired
+    private ObservationRegistry observationRegistry;
 
     @Observed(name = "visits-service:postVisitByPetId")
     @PostMapping("owners/*/pets/{petId}/visits")

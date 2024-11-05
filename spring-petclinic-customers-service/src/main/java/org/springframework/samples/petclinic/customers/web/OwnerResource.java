@@ -25,6 +25,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.customers.model.Owner;
 import org.springframework.samples.petclinic.customers.model.OwnerRepository;
 import org.springframework.web.bind.annotation.*;
+import io.micrometer.observation.ObservationRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -46,6 +48,9 @@ class OwnerResource {
 
     private static final Logger log = LoggerFactory.getLogger(OwnerResource.class);
     private final OwnerRepository ownerRepository;
+
+    @Autowired
+    private ObservationRegistry observationRegistry;
 
     /**
      * Create Owner

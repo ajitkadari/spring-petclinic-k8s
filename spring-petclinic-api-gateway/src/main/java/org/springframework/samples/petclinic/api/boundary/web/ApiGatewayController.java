@@ -20,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.micrometer.observation.annotation.Observed;
+import io.micrometer.observation.ObservationRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
 import org.springframework.samples.petclinic.api.application.CustomersServiceClient;
@@ -49,6 +51,9 @@ public class ApiGatewayController {
     private final CustomersServiceClient customersServiceClient;
     private final VisitsServiceClient visitsServiceClient;
     private final ReactiveCircuitBreakerFactory cbFactory;
+
+    @Autowired
+    private ObservationRegistry observationRegistry;
 
     @Observed(name = "petclinic:getOwnerDetailsById")
     @GetMapping(value = "owners/{ownerId}")

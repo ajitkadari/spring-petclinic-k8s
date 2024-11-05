@@ -45,6 +45,9 @@ spring:
   zipkin:
     enabled: true
 
+# For Exemplars to work we need histogram buckets
+# management.metrics.distribution.percentiles-histogram.http.server.requests=true
+
 management:
   server:
     port: 9101
@@ -62,15 +65,29 @@ management:
       export:
         url: http://localhost:4318/v1/metrics
         step: 5s
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
   tracing:
     sampling:
       probability: 1.0
+  observations:
+    enable:
+      spring:
+        security: false
 
 otel:
   logs:
     exporter:
       enabled: true
     endpoint: http://localhost:3100/loki/api/v1/push
+
+# traceID and spanId are predefined MDC keys - we want the logs to include them
+logging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]
+logging.include-application-name=false
 
 logging.level:
   org.springframework: DEBUG
