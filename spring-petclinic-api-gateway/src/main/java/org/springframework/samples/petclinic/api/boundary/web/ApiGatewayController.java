@@ -53,7 +53,7 @@ public class ApiGatewayController {
     private final ReactiveCircuitBreakerFactory cbFactory;
 
     @Autowired
-    private ObservationRegistry observationRegistry;
+    private final ObservationRegistry observationRegistry;
 
     @Observed(name = "petclinic:getOwnerDetailsById")
     @GetMapping(value = "owners/{ownerId}")

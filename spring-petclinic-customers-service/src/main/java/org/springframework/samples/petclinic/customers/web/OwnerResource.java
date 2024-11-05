@@ -50,7 +50,7 @@ class OwnerResource {
     private final OwnerRepository ownerRepository;
 
     @Autowired
-    private ObservationRegistry observationRegistry;
+    private final ObservationRegistry observationRegistry;
 
     /**
      * Create Owner

@@ -55,7 +55,7 @@ class VisitResource {
     private final VisitRepository visitRepository;
 
     @Autowired
-    private ObservationRegistry observationRegistry;
+    private final ObservationRegistry observationRegistry;
 
     @Observed(name = "visits-service:postVisitByPetId")
     @PostMapping("owners/*/pets/{petId}/visits")

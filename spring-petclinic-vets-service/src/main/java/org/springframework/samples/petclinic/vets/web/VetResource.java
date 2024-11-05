@@ -47,7 +47,7 @@ class VetResource {
     private final VetRepository vetRepository;
 
     @Autowired
-    private ObservationRegistry observationRegistry;
+    private final ObservationRegistry observationRegistry;
 
     @Observed(name = "vets-service:getAll")
     @GetMapping

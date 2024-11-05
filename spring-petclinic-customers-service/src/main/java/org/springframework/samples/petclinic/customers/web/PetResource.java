@@ -47,7 +47,7 @@ class PetResource {
     private final OwnerRepository ownerRepository;
 
     @Autowired
-    private ObservationRegistry observationRegistry;
+    private final ObservationRegistry observationRegistry;
 
     @Observed(name = "customers-service:getPetTypes")
     @GetMapping("/petTypes")

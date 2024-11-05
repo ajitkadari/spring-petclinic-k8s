@@ -1,9 +1,15 @@
 server:
   port: 8084
+  # graceful shutdown makes sure we have time to finnish any ongoing rest requests before terminating
+  # default value will be 30s before terminating
+  shutdown: graceful
 
 spring:
   application:
     name: visits-service
+
+# For Exemplars to work we need histogram buckets
+# management.metrics.distribution.percentiles-histogram.http.server.requests=true
 
 management:
   server:
@@ -24,9 +30,19 @@ management:
       export:
         url: http://localhost:4318/v1/metrics
         step: 5s
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
   tracing:
     sampling:
       probability: 1.0
+  observations:
+    enable:
+      spring:
+        security: false
 
 otel:
   logs:
@@ -45,14 +61,19 @@ spring:
       ddl-auto: none
   zipkin:
     enabled: false
+
+# traceID and spanId are predefined MDC keys - we want the logs to include them
+logging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]
+logging.include-application-name=false
+
+logging.level:
+  org.springframework: DEBUG
+  org.springframework.jdbc.core: TRACE
+  io.micrometer.observation: TRACE
+
 ---
 spring:
   profiles: mysql
   datasource:
     schema: classpath*:db/mysql/schema.sql
     data: classpath*:db/mysql/data.sql
-
-logging.level:
-  org.springframework: DEBUG
-  org.springframework.jdbc.core: TRACE
-  io.micrometer.observation: TRACE
