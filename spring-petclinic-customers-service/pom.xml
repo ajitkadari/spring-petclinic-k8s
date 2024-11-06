@@ -116,6 +116,12 @@
 			<version>1.5.2</version>
             <scope>runtime</scope>
         </dependency>
+		<!-- For Pyroscrope profiling -->
+        <dependency>
+            <groupId>io.pyroscope</groupId>
+            <artifactId>agent</artifactId>
+            <version>0.14.0</version>
+        </dependency>
 
 
         <!-- Testing -->
