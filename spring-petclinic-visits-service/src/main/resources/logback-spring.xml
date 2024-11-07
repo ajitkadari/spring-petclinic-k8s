@@ -9,7 +9,14 @@
     <Console name="console" target="SYSTEM_OUT">
       <PatternLayout pattern="${text.log.pattern}" />
     </Console>
-    <OpenTelemetry name="OpenTelemetryAppender" disableThreadContext="false" includeThreadDetails="true" captureMarkerAttribute="true" captureContextDataAttributes="*" captureMapMessageAttributes="true" captureExperimentalAttributes="true"/>
+    <OpenTelemetry name="OpenTelemetryAppender" 
+      disableThreadContext="false" 
+      includeThreadDetails="true" 
+      captureMarkerAttribute="true" 
+      captureContextDataAttributes="*" 
+      captureMapMessageAttributes="true" 
+      captureExperimentalAttributes="true"
+    />
   </Appenders>
 
   <Loggers>
