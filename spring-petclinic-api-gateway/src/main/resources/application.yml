@@ -42,8 +42,6 @@ spring:
             - Path=/api/customer/**
           filters:
             - StripPrefix=2
-  zipkin:
-    enabled: true
 
 # For Exemplars to work we need histogram buckets
 # management.metrics.distribution.percentiles-histogram.http.server.requests=true
@@ -60,10 +58,11 @@ management:
         include: health, info, prometheus
   otlp:
     tracing:
-      endpoint: http://localhost:4318/v1/traces
+      endpoint: https://otlp-gateway-prod-us-east-0.grafana.net/otlp
     metrics:
       export:
-        url: http://localhost:4318/v1/metrics
+        enabled: true
+        url: https://otlp-gateway-prod-us-east-0.grafana.net/otlp
         step: 5s
   metrics:
     distribution:
@@ -80,10 +79,17 @@ management:
         security: false
 
 otel:
+  service:
+    name: api-gateway
+  sdk:
+    disabled: false
   logs:
-    exporter:
+    exporter: otlp
+  exporter:
+    otlp:
       enabled: true
-    endpoint: http://localhost:3100/loki/api/v1/push
+      protocol: http/grpc
+      endpoint: https://otlp-gateway-prod-us-east-0.grafana.net/otlp
 
 # traceID and spanId are predefined MDC keys - we want the logs to include them
 logging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]
