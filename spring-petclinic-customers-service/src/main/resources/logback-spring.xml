@@ -1,45 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<Configuration status="WARN" packages="io.opentelemetry.instrumentation.log4j.appender.v2_17">
 
-    <springProperty name="name" source="spring.application.name" />
+  <Properties>
+    <Property name="text.log.pattern">%d{yyyy-MM-HH:mm:ss.SSS} [%t] - %MDC{HOSTNAME}, trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} %highlight{%level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green, DEBUG=blue} %c{3} - %m%n</Property>
+  </Properties>
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>
-                "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} - %msg%n"
-            </pattern>
-        </encoder>
-    </appender>
+  <Appenders>
+    <Console name="console" target="SYSTEM_OUT">
+      <PatternLayout pattern="${text.log.pattern}" />
+    </Console>
+    <OpenTelemetry name="OpenTelemetryAppender" disableThreadContext="false" includeThreadDetails="true" captureMarkerAttribute="true" captureContextDataAttributes="*" captureMapMessageAttributes="true" captureExperimentalAttributes="true"/>
+  </Appenders>
 
-   <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
-        <http>
-        <!--
-            <url>http://localhost:3100/loki/api/v1/push</url>
-        -->
-            <url>${otel.logs.endpoint}</url>
-        </http>
-        <format>
-            <label>
-                <pattern>"%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"</pattern>
-                <readMarkers>true</readMarkers>
-            </label>
-            <message>
-                <pattern>
-                    {
-                    "level":"%level",
-                    "class":"%logger{36}",
-                    "thread":"%thread",
-                    "message": "%message",
-                    "requestId": "%X{X-Request-ID}"
-                    }
-                </pattern>
-            </message>
-         </format>
-     </appender>
-     
-    <root level="INFO">
-        <appender-ref ref="CONSOLE" />
-        <appender-ref ref="LOKI" />
-    </root>
+  <Loggers>
+    <Root level="info" additivity="false">
+      <AppenderRef ref="OpenTelemetryAppender" />
+      <AppenderRef ref="console" />
+    </Root>
+  </Loggers>
 
-</configuration>
+</Configuration>
