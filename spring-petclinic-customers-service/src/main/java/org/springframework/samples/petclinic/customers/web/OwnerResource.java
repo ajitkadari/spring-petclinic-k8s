@@ -52,7 +52,7 @@ class OwnerResource {
     /**
      * Create Owner
      */
-    @Observed(name = "owners-service:postOwner")
+    @Observed(name = "owner:saveOwner")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Owner createOwner(@Valid @RequestBody Owner owner) {
@@ -63,7 +63,7 @@ class OwnerResource {
     /**
      * Read single Owner
      */
-    @Observed(name = "owners-service:getOwnerById")
+    @Observed(name = "owner:getOwnerById")
     @GetMapping(value = "/{ownerId}")
     public Optional<Owner> findOwner(@PathVariable("ownerId") int ownerId) {
         log.info("Getting owner by ownerId {}", String.valueOf(ownerId));
@@ -73,7 +73,7 @@ class OwnerResource {
     /**
      * Read List of Owners
      */
-    @Observed(name = "owners-service:getAllOwners")
+    @Observed(name = "owner:getAllOwners")
     @GetMapping
     public List<Owner> findAll() {
         log.info("Getting all owners");
@@ -83,7 +83,7 @@ class OwnerResource {
     /**
      * Update Owner
      */
-    @Observed(name = "owners-service:updateOwnerById")
+    @Observed(name = "owner:updateOwnerById")
     @PutMapping(value = "/{ownerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateOwner(@PathVariable("ownerId") int ownerId, @Valid @RequestBody Owner ownerRequest) {

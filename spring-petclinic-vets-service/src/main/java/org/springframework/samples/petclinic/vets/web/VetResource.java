@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 import io.micrometer.observation.annotation.Observed;
 import org.springframework.samples.petclinic.vets.model.Vet;
 import org.springframework.samples.petclinic.vets.model.VetRepository;
@@ -39,6 +41,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Timed("petclinic.vet")
 class VetResource {
 
     private final VetRepository vetRepository;
@@ -46,7 +49,7 @@ class VetResource {
     @Autowired
     private final ObservationRegistry observationRegistry;
 
-    @Observed(name = "vets-service:getAll")
+    @Observed(name = "vet:getAll")
     @GetMapping
     public List<Vet> showResourcesVetList() {
         log.info("Get all Vets");

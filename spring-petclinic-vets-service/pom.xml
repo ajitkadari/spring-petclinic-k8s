@@ -120,6 +120,11 @@
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-tracing-bridge-otel</artifactId>
 		</dependency>
+        <!-- For metrics-->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-core</artifactId>
+        </dependency>
 		<!-- For Latency Visualization -->
     	<!--Reports traces to OTLP collector-->
 		<dependency>

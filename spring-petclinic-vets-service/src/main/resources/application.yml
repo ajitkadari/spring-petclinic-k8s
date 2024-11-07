@@ -11,6 +11,9 @@ spring:
 # For Exemplars to work we need histogram buckets
 # management.metrics.distribution.percentiles-histogram.http.server.requests=true
 
+# Micrometer Observation Annotations support
+# https://docs.spring.io/spring-boot/reference/actuator/observability.html
+
 management:
   server:
     port: 9101
@@ -39,6 +42,8 @@ management:
     sampling:
       probability: 1.0
   observations:
+    annotations:
+      enabled: true
     enable:
       spring:
         security: false

@@ -17,9 +17,6 @@ package org.springframework.samples.petclinic.api.boundary.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import io.micrometer.observation.annotation.Observed;
-import io.micrometer.observation.ObservationRegistry;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.ReactiveCircuitBreakerFactory;
 import org.springframework.samples.petclinic.api.application.CustomersServiceClient;
@@ -48,10 +45,6 @@ public class ApiGatewayController {
     private final VisitsServiceClient visitsServiceClient;
     private final ReactiveCircuitBreakerFactory cbFactory;
 
-    @Autowired
-    private final ObservationRegistry observationRegistry;
-
-    @Observed(name = "petclinic:getOwnerDetailsById")
     @GetMapping(value = "owners/{ownerId}")
     public Mono<OwnerDetails> getOwnerDetails(final @PathVariable int ownerId) {
         log.info("Getting owner by ownerId: {}", ownerId);

@@ -19,6 +19,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import io.micrometer.core.annotation.Timed;
+import io.micrometer.core.annotation.Counted;
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -54,7 +55,7 @@ class VisitResource {
     @Autowired
     private final ObservationRegistry observationRegistry;
 
-    @Observed(name = "visits-service:postVisitByPetId")
+    @Observed(name = "visit:saveVisitByPetId")
     @PostMapping("owners/*/pets/{petId}/visits")
     @ResponseStatus(HttpStatus.CREATED)
     Visit create(
@@ -66,14 +67,14 @@ class VisitResource {
         return visitRepository.save(visit);
     }
 
-    @Observed(name = "visits-service:getVisitByPetId")
+    @Observed(name = "visit:getVisitsByPetId")
     @GetMapping("owners/*/pets/{petId}/visits")
     List<Visit> visits(@PathVariable("petId") int petId) {
         log.info("Getting visits by petId {}", String.valueOf(petId));
         return visitRepository.findByPetId(petId);
     }
 
-    @Observed(name = "visits-service:getVisitByPetIds")
+    @Observed(name = "visit:getVisitsByPetIds")
     @GetMapping("pets/visits")
     Visits visitsMultiGet(@RequestParam("petId") List<Integer> petIds) {
         final List<Visit> byPetIdIn = visitRepository.findByPetIdIn(petIds);
