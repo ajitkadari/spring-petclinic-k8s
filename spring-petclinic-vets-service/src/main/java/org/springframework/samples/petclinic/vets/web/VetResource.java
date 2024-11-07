@@ -19,8 +19,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import io.micrometer.observation.annotation.Observed;
 import org.springframework.samples.petclinic.vets.model.Vet;
 import org.springframework.samples.petclinic.vets.model.VetRepository;
@@ -43,7 +41,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 class VetResource {
 
-    private static final Logger log = LoggerFactory.getLogger(VetResource.class);
     private final VetRepository vetRepository;
 
     @Autowired

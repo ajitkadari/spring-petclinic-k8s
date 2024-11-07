@@ -137,8 +137,8 @@
 		<!-- For Pyroscrope profiling -->
         <dependency>
             <groupId>io.pyroscope</groupId>
-            <artifactId>agent</artifactId>
-            <version>0.14.0</version>
+            <artifactId>otel</artifactId>
+            <version>0.10.1.11</version>
         </dependency>
 
 

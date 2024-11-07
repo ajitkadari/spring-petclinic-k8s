@@ -11,16 +11,12 @@ import io.micrometer.core.instrument.observation.DefaultMeterObservationHandler;
 import io.micrometer.tracing.handler.TracingAwareMeterObservationHandler;
 import io.micrometer.observation.ObservationTextPublisher;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Slf4j
 public class ObservationConfiguration {
-
-    private final Logger logger = LoggerFactory.getLogger(ObservationConfiguration.class);
 
     // Monitoring beans
     @Bean

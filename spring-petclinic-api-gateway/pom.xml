@@ -49,7 +49,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-        
 		<!-- For Observation -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -59,7 +58,6 @@
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-observation</artifactId>
 		</dependency>
-		
 		<!-- For Metrics -->
 		<!-- For OTLP -->
 		<dependency>
@@ -91,8 +89,8 @@
 		<!-- For Pyroscrope profiling -->
         <dependency>
             <groupId>io.pyroscope</groupId>
-            <artifactId>agent</artifactId>
-            <version>0.14.0</version>
+            <artifactId>otel</artifactId>
+            <version>0.10.1.11</version>
         </dependency>
 
         <!-- Spring Cloud -->

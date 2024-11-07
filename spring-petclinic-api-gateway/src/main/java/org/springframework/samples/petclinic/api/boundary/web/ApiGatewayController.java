@@ -17,8 +17,6 @@ package org.springframework.samples.petclinic.api.boundary.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import io.micrometer.observation.annotation.Observed;
 import io.micrometer.observation.ObservationRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +44,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ApiGatewayController {
 
-    private static final Logger log = LoggerFactory.getLogger(ApiGatewayController.class);
-    
     private final CustomersServiceClient customersServiceClient;
     private final VisitsServiceClient visitsServiceClient;
     private final ReactiveCircuitBreakerFactory cbFactory;
