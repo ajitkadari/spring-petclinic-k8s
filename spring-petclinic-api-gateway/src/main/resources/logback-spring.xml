@@ -6,7 +6,7 @@
   </Properties>
 
   <Appenders>
-    <Console name="console" target="SYSTEM_OUT">
+    <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="${text.log.pattern}" />
     </Console>
     <OpenTelemetry name="OpenTelemetryAppender" 
@@ -20,9 +20,9 @@
   </Appenders>
 
   <Loggers>
-    <Root level="info" additivity="false">
-      <AppenderRef ref="OpenTelemetryAppender" />
-      <AppenderRef ref="console" />
+    <Root>
+      <AppenderRef ref="OpenTelemetryAppender" level="All"/>
+      <AppenderRef ref="Console" level="All"/>
     </Root>
   </Loggers>
 
