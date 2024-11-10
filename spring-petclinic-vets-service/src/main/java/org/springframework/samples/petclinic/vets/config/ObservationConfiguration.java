@@ -1,10 +1,11 @@
 package org.springframework.samples.petclinic.vets.config;
 
 import io.micrometer.core.aop.CountedAspect;
+import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.observation.DefaultMeterObservationHandler;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
-import io.micrometer.observation.Observation.Context;
+import io.micrometer.observation.Observation;
 import io.micrometer.observation.ObservationHandler;
 import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.observation.ObservationTextPublisher;
@@ -30,7 +31,7 @@ public class ObservationConfiguration {
     }
 
     @Bean
-    public ObservationHandler<Context> tracingAwareMeterObservationHandler() {
+    public ObservationHandler<Observation.Context> tracingAwareMeterObservationHandler() {
         Tracer tracer = Tracer.NOOP;
         MeterRegistry meterRegistry = new SimpleMeterRegistry();
         return new TracingAwareMeterObservationHandler<>(
@@ -38,7 +39,7 @@ public class ObservationConfiguration {
     }
 
     @Bean
-    public ObservationHandler<Context> observationTextPublisher() {
+    public ObservationHandler<Observation.Context> observationTextPublisher() {
         return new ObservationTextPublisher(log::info);
     }
 
@@ -52,5 +53,11 @@ public class ObservationConfiguration {
     @Bean
     public CountedAspect countedAspect(MeterRegistry registry) {
         return new CountedAspect(registry);
+    }
+
+    // To have the @Timed support we need to register this aspect
+    @Bean
+    public TimedAspect timedAspect(MeterRegistry registry) {
+        return new TimedAspect(registry);
     }
 }

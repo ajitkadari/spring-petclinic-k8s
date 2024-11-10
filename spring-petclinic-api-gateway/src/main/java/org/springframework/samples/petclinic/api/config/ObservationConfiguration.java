@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.api.config;
 
 import io.micrometer.core.aop.CountedAspect;
+import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.observation.DefaultMeterObservationHandler;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
@@ -52,5 +53,11 @@ public class ObservationConfiguration {
     @Bean
     public CountedAspect countedAspect(MeterRegistry registry) {
         return new CountedAspect(registry);
+    }
+
+    // To have the @Timed support we need to register this aspect
+    @Bean
+    public TimedAspect timedAspect(MeterRegistry registry) {
+        return new TimedAspect(registry);
     }
 }
