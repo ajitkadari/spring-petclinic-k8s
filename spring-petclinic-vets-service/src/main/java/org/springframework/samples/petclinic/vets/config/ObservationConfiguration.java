@@ -1,16 +1,16 @@
 package org.springframework.samples.petclinic.vets.config;
 
-import io.micrometer.tracing.Tracer;
+import io.micrometer.core.aop.CountedAspect;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.observation.DefaultMeterObservationHandler;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import io.micrometer.observation.Observation.Context;
 import io.micrometer.observation.ObservationHandler;
 import io.micrometer.observation.ObservationRegistry;
-import io.micrometer.observation.aop.ObservedAspect;
-import io.micrometer.core.aop.CountedAspect;
-import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
-import io.micrometer.core.instrument.observation.DefaultMeterObservationHandler;
-import io.micrometer.tracing.handler.TracingAwareMeterObservationHandler;
 import io.micrometer.observation.ObservationTextPublisher;
+import io.micrometer.observation.aop.ObservedAspect;
+import io.micrometer.tracing.Tracer;
+import io.micrometer.tracing.handler.TracingAwareMeterObservationHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +35,7 @@ public class ObservationConfiguration {
         MeterRegistry meterRegistry = new SimpleMeterRegistry();
         return new TracingAwareMeterObservationHandler<>(
             new DefaultMeterObservationHandler(meterRegistry), tracer);
-    } 
+    }
 
     @Bean
     public ObservationHandler<Context> observationTextPublisher() {
