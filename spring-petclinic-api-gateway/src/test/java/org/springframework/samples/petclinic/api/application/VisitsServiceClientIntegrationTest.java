@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class VisitsServiceClientIntegrationTest {
 
