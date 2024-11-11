@@ -11,7 +11,6 @@ import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.observation.ObservationTextPublisher;
 import io.micrometer.observation.aop.ObservedAspect;
 import io.micrometer.tracing.Tracer;
-import io.micrometer.tracing.handler.TracingAwareMeterObservationHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,17 +24,16 @@ public class ObservationConfiguration {
     public ObservationRegistry observationRegistry() {
       final var observationRegistry = ObservationRegistry.create();
       observationRegistry.observationConfig()
-        .observationHandler(tracingAwareMeterObservationHandler())
+        .observationHandler(defaultMeterObservationHandler())
         .observationHandler(observationTextPublisher());
       return observationRegistry;
     }
 
     @Bean
-    public ObservationHandler<Context> tracingAwareMeterObservationHandler() {
+    public ObservationHandler<Context> defaultMeterObservationHandler() {
         Tracer tracer = Tracer.NOOP;
         MeterRegistry meterRegistry = new SimpleMeterRegistry();
-        return new TracingAwareMeterObservationHandler<>(
-            new DefaultMeterObservationHandler(meterRegistry), tracer);
+        return new DefaultMeterObservationHandler(meterRegistry);
     }
 
     @Bean

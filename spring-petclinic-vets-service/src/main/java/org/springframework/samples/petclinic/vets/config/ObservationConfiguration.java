@@ -25,17 +25,16 @@ public class ObservationConfiguration {
     public ObservationRegistry observationRegistry() {
       final var observationRegistry = ObservationRegistry.create();
       observationRegistry.observationConfig()
-        .observationHandler(tracingAwareMeterObservationHandler())
+        .observationHandler(defaultMeterObservationHandler())
         .observationHandler(observationTextPublisher());
       return observationRegistry;
     }
 
     @Bean
-    public ObservationHandler<Observation.Context> tracingAwareMeterObservationHandler() {
+    public ObservationHandler<Observation.Context> defaultMeterObservationHandler() {
         Tracer tracer = Tracer.NOOP;
         MeterRegistry meterRegistry = new SimpleMeterRegistry();
-        return new TracingAwareMeterObservationHandler<>(
-            new DefaultMeterObservationHandler(meterRegistry), tracer);
+        return new DefaultMeterObservationHandler(meterRegistry);
     }
 
     @Bean

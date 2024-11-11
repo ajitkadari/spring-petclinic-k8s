@@ -34,7 +34,7 @@ import static java.util.stream.Collectors.joining;
 public class VisitsServiceClient {
 
     // Could be changed for testing purpose
-    @Value("${app.visits.uri}")
+	@Value("${visits-service-id://visits-service}")
     private String hostname;
 
     private final WebClient.Builder webClientBuilder;

@@ -57,10 +57,9 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>javax.persistence-api</artifactId>
-            <version>2.2</version>
-		</dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
     	<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -141,4 +140,36 @@
             <scope>test</scope>
         </dependency>
 	</dependencies>
+
+    <build>
+		<finalName>visits-service</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+                  <layers>
+                    <enabled>true</enabled>
+                  </layers>
+				</configuration>
+				<executions>
+					<execution>
+						<!-- Spring Boot Actuator displays build-related information if a
+							META-INF/build-info.properties file is present -->
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+						<configuration>
+							<additionalProperties>
+								<encoding.source>${project.build.sourceEncoding}</encoding.source>
+								<encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+								<java.source>${java.version}</java.source>
+								<java.target>${java.version}</java.target>
+							</additionalProperties>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

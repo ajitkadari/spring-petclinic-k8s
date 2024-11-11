@@ -31,7 +31,7 @@ public class CustomersServiceClient {
 
     private final WebClient.Builder webClientBuilder;
     
-    @Value("${app.customers.uri}")
+    @Value("${customers-service-id://customers-service}")
     private String customersUri;
 
     public Mono<OwnerDetails> getOwner(final int ownerId) {

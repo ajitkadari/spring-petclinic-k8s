@@ -1,12 +1,47 @@
-server:
-  port: 8082
-  # graceful shutdown makes sure we have time to finnish any ongoing rest requests before terminating
-  # default value will be 30s before terminating
-  shutdown: graceful
+app:
+  customers:
+    uri: http://localhost:8082
+  vets:
+    uri: http://localhost:8083
+  visits:
+    uri: http://localhost:8084
 
 spring:
   application:
-    name: customers-service
+    name: api-gateway
+
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    gateway:
+      x-forwarded:
+        enabled: true
+        for-enabled: true
+        proto-enabled: true
+        host-append: false
+        port-append: false
+        proto-append: false
+      routes:
+        - id: vets-service
+          uri: ${app.vets.uri}
+          predicates:
+            - Path=/api/vet/**
+          filters:
+            - StripPrefix=2
+        - id: visits-service
+          uri: ${app.visits.uri}
+          predicates:
+            - Path=/api/visit/**
+          filters:
+            - StripPrefix=2
+        - id: customers-service
+          uri: ${app.customers.uri}
+          predicates:
+            - Path=/api/customer/**
+          filters:
+            - StripPrefix=2
 
 # For Exemplars to work we need histogram buckets
 # management.metrics.distribution.percentiles-histogram.http.server.requests=true
@@ -50,7 +85,7 @@ management:
 
 otel:
   service:
-    name: customers-service
+    name: api-gateway
   sdk:
     disabled: false
   logs:
@@ -61,28 +96,11 @@ otel:
       protocol: http/grpc
       endpoint: https://otlp-gateway-prod-us-east-0.grafana.net/otlp
 
-spring:
-  datasource:
-    initialization-mode: always
-    schema: classpath*:db/hsqldb/schema.sql
-    data: classpath*:db/hsqldb/data.sql
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: none
-
 # traceID and spanId are predefined MDC keys - we want the logs to include them
-logging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]
-logging.include-application-name=false
+# logging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]
+# logging.include-application-name=false
 
 logging.level:
   org.springframework: DEBUG
   org.springframework.jdbc.core: TRACE
   io.micrometer.observation: TRACE
-
----
-spring:
-  profiles: mysql
-  datasource:
-    schema: classpath*:db/mysql/schema.sql
-    data: classpath*:db/mysql/data.sql

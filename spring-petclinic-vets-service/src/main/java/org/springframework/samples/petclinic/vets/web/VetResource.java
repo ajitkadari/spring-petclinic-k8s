@@ -45,9 +45,6 @@ class VetResource {
 
     private final VetRepository vetRepository;
 
-    @Autowired
-    private final ObservationRegistry observationRegistry;
-
     @Observed(name = "vet:getAll")
     @GetMapping
     public List<Vet> showResourcesVetList() {
