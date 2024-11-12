@@ -31,7 +31,7 @@ management:
       export:
         enabled: true
         url: https://otlp-gateway-prod-us-east-0.grafana.net/otlp
-        step: 5s
+        step: 1m
   metrics:
     distribution:
       percentiles-histogram:
@@ -58,7 +58,7 @@ otel:
   exporter:
     otlp:
       enabled: true
-      protocol: http/grpc
+      protocol: http/protobuf
       endpoint: https://otlp-gateway-prod-us-east-0.grafana.net/otlp
 
 spring:
@@ -74,8 +74,8 @@ spring:
 
 logging.level:
   org.springframework: DEBUG
-  org.springframework.jdbc.core: TRACE
-  io.micrometer.observation: TRACE
+  org.springframework.jdbc.core: DEBUG
+  io.micrometer.observation: DEBUG
 
 ---
 spring:
